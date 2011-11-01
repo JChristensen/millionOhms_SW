@@ -28,7 +28,8 @@
 //invert != 0 interprets a high state as released, low as pressed  (can use true or false).
 //dbTime is the debounce time in milliseconds.
 //note that invert cannot be implied from puEnabled since an external pullup could be used.
-button::button(uint8_t pin, uint8_t puEnabled, uint8_t invert, uint32_t dbTime) {
+button::button(uint8_t pin, uint8_t puEnabled, uint8_t invert, uint32_t dbTime)
+{
 	_pin = pin;
 	_puEnabled = puEnabled;
 	_invert = invert;
@@ -47,7 +48,8 @@ button::button(uint8_t pin, uint8_t puEnabled, uint8_t invert, uint32_t dbTime) 
 
 //read() returns the state of the button 1 (pressed), or 0 (released),
 //does debouncing, and also captures and maintains times, previous states, etc.
-uint8_t button::read(void) {
+uint8_t button::read(void)
+{
 	static uint32_t ms;
 	static uint8_t pinVal;
 
@@ -79,33 +81,38 @@ uint8_t button::read(void) {
 //isPressed() and isReleased() check the button state when it was last read,
 //and return false (0) or true (!=0) accordingly.
 //These functions do not cause the button to be read.
-uint8_t button::isPressed(void) {
+uint8_t button::isPressed(void)
+{
 	return _state == 0 ? 0 : 1;
 }
 
-uint8_t button::isReleased(void) {
+uint8_t button::isReleased(void)
+{
 	return _state == 0 ? 1 : 0;
 }
 
 //wasPressed() and wasReleased() check the button state to see if it changed
 //between the last two reads and return false (0) or true (!=0) accordingly.
 //These functions do not cause the button to be read.
-uint8_t button::wasPressed(void) {
+uint8_t button::wasPressed(void)
+{
 	return _state && _changed;
 }
 
-uint8_t button::wasReleased(void) {
+uint8_t button::wasReleased(void)
+{
 	return !_state && _changed;
 }
 
 //pressedFor(ms) and releasedFor(ms) check to see if the button is pressed (or released),
 //and has been in that state for the specified time. Returns false (0) or true (1) accordingly.
 //These functions do not cause the button to be read.
-uint8_t button::pressedFor(uint32_t ms) {
+uint8_t button::pressedFor(uint32_t ms)
+{
 	return (_state == 1 && _time - _lastChange >= ms) ? 1 : 0;
 }
 
-uint8_t button::releasedFor(uint32_t ms) {
+uint8_t button::releasedFor(uint32_t ms)
+{
 	return (_state == 0 && _time - _lastChange >= ms) ? 1 : 0;
 }
-

@@ -39,10 +39,9 @@
 # To rebuild project do "make clean" then "make all".
 #----------------------------------------------------------------------------
 
-
 # MCU name
-MCU = attiny45
-#MCU = attiny85
+#MCU = attiny45
+MCU = attiny85
 
 # Processor frequency.
 #     This will define a symbol, F_CPU, in all source code files equal to the 
@@ -50,7 +49,7 @@ MCU = attiny45
 #     calculate timings. Do NOT tack on a 'UL' at the end, this will be done
 #     automatically to create a 32-bit value in your source code.
 #     Typical values are:
-#         F_CPU =  1000000
+         F_CPU =  1000000
 #         F_CPU =  1843200
 #         F_CPU =  2000000
 #         F_CPU =  3686400
@@ -62,9 +61,6 @@ MCU = attiny45
 #         F_CPU = 16000000
 #         F_CPU = 18432000
 #         F_CPU = 20000000
-#F_CPU = 16000000
-#F_CPU = 500000
-F_CPU = 1000000
 
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex

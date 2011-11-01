@@ -21,7 +21,8 @@
 
 volatile unsigned long MS_COUNTER;
 
-void setupUtil(void) {
+void setupUtil(void)
+{
 	//set timer0 CTC mode for 1000 interrupts/sec with 1MHz system clock
 	TCCR0A |= _BV(WGM01);	//set CTC mode
 	OCR0A = 124;			//set the compare value, OCR0A match clears the counter
@@ -30,19 +31,23 @@ void setupUtil(void) {
 	TCCR0B = 0x02;			//start timer, prescaler clk/8
 }
 
-ISR(TIMER0_COMPA_vect) {	//handles the timer1 CTC (Clear on Timer Compare) interrupt
+ISR(TIMER0_COMPA_vect)
+{	//handles the timer1 CTC (Clear on Timer Compare) interrupt
 	MS_COUNTER++;
 }
 
-unsigned long millis(void) {
+unsigned long millis(void)
+{
 	unsigned long msTemp;
+
 	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
 		msTemp = MS_COUNTER;
 	}
 	return msTemp;
 }
 
-void pinMode(uint8_t pin, bool mode) {
+void pinMode(uint8_t pin, bool mode)
+{
 	if (mode) {
 		DDRB |= 1 << pin;
 	}
@@ -51,7 +56,8 @@ void pinMode(uint8_t pin, bool mode) {
 	}
 }
 
-void digitalWrite(uint8_t pin, bool value) {
+void digitalWrite(uint8_t pin, bool value)
+{
 	if (value) {
 		PORTB |= 1 << pin;
 	}
@@ -60,6 +66,7 @@ void digitalWrite(uint8_t pin, bool value) {
 	}
 }
 
-bool digitalRead(uint8_t pin) {
+bool digitalRead(uint8_t pin)
+{
 	return PINB & (1 << pin);
 }

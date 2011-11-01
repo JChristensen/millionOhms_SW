@@ -50,24 +50,27 @@ void runLEDs(void);
 void loop(void);
 
 button btn = button(BUTTON, true, true, TACT_DEBOUNCE);    //instantiate the tact switch
-uint8_t delayMult = 1, pattern;
-uint8_t ledState, mcucr1, mcucr2, mode;
+uint8_t ledState, mode, mcucr1, mcucr2, sleepEnable;
 unsigned long ms, msLast, msWakeUp;
 
-void setup(void) {
+void setup(void)
+{
     setPinsOutput();
+	sleepEnable = !btn.read();				//disable automatic sleep if button is pressed on reset
+	while (btn.isPressed()) btn.read();		//wait for the button to be released
 }
 
 #ifndef ARDUINO
-int main(void) {				//main() not needed in Arduino environment
-	setupUtil();				//setupUtil() not needed in Arduino environment
+int main(void)		//main() not needed in Arduino environment
+{
+	setupUtil();
 	setup();
 	loop();
 }
 #endif
 
-void loop(void) {
-
+void loop(void)
+{
 	for (;;) {
 		btn.read();
 		if (btn.wasReleased()) {
@@ -78,7 +81,7 @@ void loop(void) {
 			while (!btn.wasReleased()) btn.read();    //wait for the button to be released
 			goToSleep();
 		}
-		else if (ms - msWakeUp >= WAKE_TIME) {
+		else if (ms - msWakeUp >= WAKE_TIME && sleepEnable) {
 			setPinsInput();
 			goToSleep();
 		}
@@ -86,7 +89,8 @@ void loop(void) {
 	}
 }
 
-void goToSleep(void) {
+void goToSleep(void)
+{
     GIMSK |= _BV(INT0);                       //enable INT0
     MCUCR &= ~(_BV(ISC01) | _BV(ISC00));      //INT0 on low level
     ACSR |= _BV(ACD);                         //disable the analog comparator
@@ -113,10 +117,10 @@ void goToSleep(void) {
     msWakeUp = millis();
 }
 
-ISR(INT0_vect) {					//nothing to actually do here, the interrupt just wakes us up!
-}
+ISR(INT0_vect) {}					//nothing to actually do here, the interrupt just wakes us up!
 
-void runLEDs(void) {
+void runLEDs(void)
+{
     ms = millis();
     if ( ms - msLast >= delayBase << (mode % nSPEEDS)) {
         msLast = ms;
@@ -234,15 +238,16 @@ void runLEDs(void) {
     }
 }
 
-
-void setPinsOutput(void) {
+void setPinsOutput(void)
+{
     pinMode(LED1, OUTPUT);
     pinMode(LED2, OUTPUT);
     pinMode(LED3, OUTPUT);
     pinMode(LED4, OUTPUT);
 }
 
-void setPinsInput(void) {
+void setPinsInput(void)
+{
     digitalWrite(LED1, LOW);
     digitalWrite(LED2, LOW);
     digitalWrite(LED3, LOW);
