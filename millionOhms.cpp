@@ -1,17 +1,17 @@
 /*----------------------------------------------------------------------*
-* millionOhms.cpp -- "Warning" Lights for ATtiny45/85.					*
-* Flashes four LEDs, different speeds and patterns are selected by		*
-* a tactile pushbutton switch.  Sleeps after five minutes to conserve	*
-* battery power (2xAA).  A long press on the button will also initiate	*
-* sleep mode.															*
-* 																		*
-* Set fuse bytes: L=0x62 H=0xDE E=0xFF									*
-* (BOD is set at 1.8V, system clock is 1MHz, from the internal 8MHz RC	*
-* oscillator divided by 8.  Low and Extended fuses remain at their		*
-* factory default values.)												*
-*																		*
-* Jack Christensen 18Sep2011											*
-*                                                                      	*
+* millionOhms.cpp -- "Warning" Lights for ATtiny85/45.                  *
+* Flashes four LEDs, different speeds and patterns are selected by      *
+* a tactile pushbutton switch.  Sleeps after five minutes to conserve   *
+* battery power (2xAA).  A long press on the button will also initiate  *
+* sleep mode.                                                           *
+*                                                                       *
+* Set fuse bytes: L=0x62 H=0xDE E=0xFF                                  *
+* (BOD is set at 1.8V, system clock is 1MHz, from the internal 8MHz RC  *
+* oscillator divided by 8.  Low and Extended fuses remain at their      *
+* factory default values.)                                              *
+*                                                                       *
+* Jack Christensen 18Sep2011                                            *
+*                                                                       *
 * This work is licensed under the Creative Commons Attribution-         *
 * ShareAlike 3.0 Unported License. To view a copy of this license,      *
 * visit http://creativecommons.org/licenses/by-sa/3.0/ or send a        *
@@ -23,9 +23,10 @@
 #include <avr/power.h>
 #include <avr/sleep.h>
 #include <avr/interrupt.h>
-#include "button.h"
+#include "Button.h"
 #ifndef ARDUINO
-#include "util.h"				//not needed if compiled under Arduino Tiny
+#include <stdint.h>
+#include "millionUtil.h"         //not needed if compiled under Arduino Tiny
 #endif
 
 #define LED1 1                   //PB1 LED1
@@ -49,44 +50,44 @@ void goToSleep(void);
 void runLEDs(void);
 void loop(void);
 
-button btn = button(BUTTON, true, true, TACT_DEBOUNCE);    //instantiate the tact switch
+Button btn = Button(BUTTON, true, true, TACT_DEBOUNCE);    //instantiate the tact switch
 uint8_t ledState, mode, mcucr1, mcucr2, sleepEnable;
 unsigned long ms, msLast, msWakeUp;
 
 void setup(void)
 {
     setPinsOutput();
-	sleepEnable = !btn.read();				//disable automatic sleep if button is pressed on reset
-	while (btn.isPressed()) btn.read();		//wait for the button to be released
+    sleepEnable = !btn.read();              //disable automatic sleep if button is pressed on reset
+    while (btn.isPressed()) btn.read();     //wait for the button to be released
 }
 
 #ifndef ARDUINO
-int main(void)		//main() not needed in Arduino environment
+int main(void)      //main() not needed in Arduino environment
 {
-	setupUtil();
-	setup();
-	loop();
+    setupUtil();
+    setup();
+    loop();
 }
 #endif
 
 void loop(void)
 {
-	for (;;) {
-		btn.read();
-		if (btn.wasReleased()) {
-			if (++mode > MAX_MODE) mode = 0;
-		}
-		if (btn.pressedFor(1000)) {
-			setPinsInput();
-			while (!btn.wasReleased()) btn.read();    //wait for the button to be released
-			goToSleep();
-		}
-		else if (ms - msWakeUp >= WAKE_TIME && sleepEnable) {
-			setPinsInput();
-			goToSleep();
-		}
-		runLEDs();
-	}
+    for (;;) {
+        btn.read();
+        if (btn.wasReleased()) {
+            if (++mode > MAX_MODE) mode = 0;
+        }
+        if (btn.pressedFor(1000)) {
+            setPinsInput();
+            while (!btn.wasReleased()) btn.read();    //wait for the button to be released
+            goToSleep();
+        }
+        else if (ms - msWakeUp >= WAKE_TIME && sleepEnable) {
+            setPinsInput();
+            goToSleep();
+        }
+        runLEDs();
+    }
 }
 
 void goToSleep(void)
@@ -117,7 +118,7 @@ void goToSleep(void)
     msWakeUp = millis();
 }
 
-ISR(INT0_vect) {}					//nothing to actually do here, the interrupt just wakes us up!
+ISR(INT0_vect) {}                   //nothing to actually do here, the interrupt just wakes us up!
 
 void runLEDs(void)
 {
