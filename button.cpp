@@ -13,6 +13,8 @@
  * letter to Creative Commons, 171 Second Street, Suite 300,            *
  * San Francisco, California, 94105, USA.                               *
  *----------------------------------------------------------------------*/
+#ifndef button_cpp
+#define button_cpp
 #include <avr/io.h>
 #include "button.h"
 #ifdef ARDUINO
@@ -116,3 +118,4 @@ uint8_t button::releasedFor(uint32_t ms)
 {
 	return (_state == 0 && _time - _lastChange >= ms) ? 1 : 0;
 }
+#endif
