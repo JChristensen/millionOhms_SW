@@ -77,7 +77,7 @@ OBJDIR = .
 SRC = 
 
 # List C++ source files here. (C dependencies are automatically generated.)
-CPPSRC = $(TARGET).cpp util.cpp Button.cpp
+CPPSRC = $(TARGET).cpp millionUtil.cpp Button.cpp
 
 # List Assembler source files here.
 #     Make them always end in a capital .S.  Files ending in a lowercase .s

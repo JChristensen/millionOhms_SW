@@ -1,0 +1,14 @@
+*.zip
+*.7z
+*.docx
+*.o
+*.lst
+*.eep
+*.elf
+*.lss
+*.lst
+*.map
+*.pnproj
+*.pnps
+*.sym
+*.bat

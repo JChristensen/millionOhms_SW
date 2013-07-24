@@ -1,6 +1,6 @@
 /*----------------------------------------------------------------------*
  * util.cpp -- Simple implementation of "Arduino" functions millis(),   *
- * pinMode(), digitalWrite(), digitalRead().                            *
+ * pinMode(), digitalWrite(), digitalRead(), random(min, max).          *
  *                                                                      *
  * Counter/Timer0 is used to implement millis().  Call setupUtil()      *
  * once during initialization to set up the timer and interrupt.        *
@@ -69,4 +69,9 @@ void digitalWrite(uint8_t pin, bool value)
 bool digitalRead(uint8_t pin)
 {
     return PINB & (1 << pin);
+}
+
+long random(long min, long max)
+{
+	return random() % (max - min) + min;
 }

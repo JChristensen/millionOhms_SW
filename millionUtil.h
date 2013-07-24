@@ -14,6 +14,8 @@
  * San Francisco, California, 94105, USA.                               *
  *----------------------------------------------------------------------*/
  
+#include "stdlib.h"
+
 #define INPUT false
 #define OUTPUT true
 #define LOW false
@@ -24,3 +26,4 @@ unsigned long millis(void);
 void pinMode(uint8_t pin, bool mode);
 void digitalWrite(uint8_t pin, bool value);
 bool digitalRead(uint8_t pin);
+long random(long min, long max);
