@@ -38,8 +38,8 @@
 
 #define RANDOM_RUN_MS 16000      //milliseconds to stay awake for in random mode (16 sec)
 #define MANUAL_RUN_MS 300000     //milliseconds to stay awake for in manual mode (5 min)
-#define RANDOM_SLEEP_MIN 73      //minimum number of 8-sec wdt periods to sleep for in random mode (~10 min)
-#define RANDOM_SLEEP_MAX 220     //maximum number of 8-sec wdt periods to sleep for in random mode (~30 min)
+#define RANDOM_SLEEP_MIN 37      //minimum number of 8-sec wdt periods to sleep for in random mode (~5 min)
+#define RANDOM_SLEEP_MAX 183     //maximum number of 8-sec wdt periods to sleep for in random mode (~25 min)
 #define LED1 1                   //PB1 LED1
 #define LED2 0                   //PB0 LED2
 #define LED3 3                   //PB3 LED3
