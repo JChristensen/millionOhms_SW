@@ -1,0 +1,49 @@
+# "One Million Ohms" Firmware
+https://github.com/JChristensen/millionOhms_SW  
+README file  
+Jack Christensen  
+Firmware v3 Dec-2018
+
+## License
+"One Million Ohms" Firmware Copyright (C) 2018 Jack Christensen GNU GPL v3.0
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License v3.0 as published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/gpl.html>
+
+## Introduction
+
+Amuse your friends and confuse your enemies! Keep the uninitiated away from your workbench or desk and out of your lab!
+
+- Great conversation piece or gag gift
+- Big, scary 1,000,000 Ω resistor in the middle of the board
+- ATtiny85 microcontroller
+- Arduino-compatible, hackable open-source hardware and software
+- Can be (re)programmed with an ICSP programmer
+
+Also see the hardware design repo [here](https://github.com/JChristensen/millionOhms_HW).
+
+
+## Operation
+
+Four LEDs flash in 8 different patterns and 3 speeds.
+
+There are four operating modes:
+
+1. **Slow random mode:** Sleeps for a random interval between 10 and 30 minutes, then wakes and flashes the LEDs using a random pattern and speed for 16 seconds.
+2. **Fast random mode:** Like slow random mode but sleeps for between 5 and 15 minutes.
+3. **Demo mode:** Like the random modes, but sleeps for 8 seconds and flashes the LEDs for 4 seconds.
+4. **Manual mode:** Sleeps until the select button is pressed, then flashes the LEDs for three minutes, then sleeps again. Pressing the select button while the LEDs are flashing selects the next speed/pattern. Holding the select button while the LEDs are flashing puts the circuit back to sleep.
+
+To choose the operating mode, press the RESET and SELECT buttons together, then first release RESET, then release SELECT. The current mode is indicated on the LEDs with the upper left LED being mode 1 (slow random). Press and release SELECT to choose the mode. Hold SELECT to save the mode and start the LEDs flashing, or just wait for five seconds and the mode will be saved.
+
+The SELECT button has no effect in demo mode or in the random modes.
+
+Pressing and releasing the RESET button will cause the program to restart in the last saved mode. The mode is remembered even if the batteries are removed.
+
+With two new AA alkaline cells, battery life should be over a year in
+slow random mode, over six months in fast random mode, and (SWAG) a couple weeks in demo mode.
+
+
