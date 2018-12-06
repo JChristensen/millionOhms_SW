@@ -2,7 +2,7 @@
 https://github.com/JChristensen/millionOhms_SW  
 README file  
 Jack Christensen  
-Firmware v3 Dec-2018
+Firmware v3.0.0 Dec-2018
 
 ## License
 "One Million Ohms" Firmware Copyright (C) 2018 Jack Christensen GNU GPL v3.0
@@ -19,11 +19,11 @@ Amuse your friends and confuse your enemies! Keep the uninitiated away from your
 
 - Great conversation piece or gag gift
 - Big, scary 1,000,000 Ω resistor in the middle of the board
-- ATtiny85 microcontroller
-- Arduino-compatible, hackable open-source hardware and software
-- Can be (re)programmed with an ICSP programmer
+- [ATtiny85 microcontroller](https://www.microchip.com/wwwproducts/en/ATtiny85)
+- [Arduino](https://www.arduino.cc/)-compatible, hackable open-source hardware and software
+- Can be (re)programmed with an [ICSP programmer](https://www.adafruit.com/product/46)
 
-Also see the hardware design repo [here](https://github.com/JChristensen/millionOhms_HW).
+Also see the [hardware design repo](https://github.com/JChristensen/millionOhms_HW).
 
 ## Operation
 
