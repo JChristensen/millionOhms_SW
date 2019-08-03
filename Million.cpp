@@ -130,43 +130,41 @@ bool Million::run()
     static uint8_t ledState;        // LED state, 0-3
     uint32_t ms = millis();
 
-    switch (m_running)
+    if (m_running)
     {
-        case false:
-            if (m_reps > 0)
+        if (ms - msLastChange >= m_interval)
+        {
+            msLastChange += m_interval;
+            if (++ledState >= nLedState)
             {
-                m_running = true;
-                msLastChange = ms;
-                ledState = 0;
-                showPattern(ledState);
-            }
-            break;
-
-        case true:
-            if ( ms - msLastChange >= m_interval )
-            {
-                msLastChange += m_interval;
-                if (++ledState >= nLedState)
+                if (--m_reps > 0)
                 {
-                    if (--m_reps > 0)
-                    {
-                        ledState = 0;
-                        showPattern(ledState);
-                    }
-                    else
-                    {
-                        off();
-                        m_running = false;
-                    }
+                    ledState = 0;
+                    showPattern(ledState);
                 }
                 else
                 {
-                    showPattern(ledState);
+                    off();
+                    m_running = false;
                 }
             }
-            break;
+            else
+            {
+                showPattern(ledState);
+            }
+        }
     }
-    return (m_running);
+    else
+    {
+        if (m_reps > 0)
+        {
+            m_running = true;
+            msLastChange = ms;
+            ledState = 0;
+            showPattern(ledState);
+        }
+    }
+    return m_running;
 }
 
 // sleep the mcu according to m_mode.
